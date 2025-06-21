@@ -1,44 +1,57 @@
-# Success! Created your Turborepo at betteruptime-dapp
-
-# To get started:
-# 1. Change to the project directory
-cd betteruptime-dapp
-
-# 2. Enable Remote Caching (recommended)
-bunx turbo login`
-#    Learn more: https://turborepo.com/remote-cache
-
-# 3. Available commands:
-bun run build   # Build all apps and packages
-bun run dev     # Develop all apps and packages
-bun run lint    # Lint all apps and packages
-
-# Tip: Run a command twice to hit cache
-
 # BetterUptime DApp
 
-Welcome to the BetterUptime DApp monorepo! This project is built using Turborepo for optimal development experience.
+A modern decentralized application built with Turborepo for optimal development experience and performance.
 
-## Project Structure
+## 🚀 Quick Start
 
-- `/apps` - Contains the main applications
-  - `/web` - Web application
-  - `/docs` - Documentation site
-- `/packages` - Shared packages and libraries
+### Prerequisites
+- [Bun](https://bun.sh/) (recommended) or Node.js
+- Git
 
-## Getting Started
-`
-1. Install dependencies:
-    ```bash
+### Installation
+
+1. **Clone and navigate to the project**
+   ```bash
+   cd betteruptime-dapp
+   ```
+
+2. **Install dependencies**
+   ```bash
    bun install
-    ```
+   ```
 
-2. Start the development server:
-    ```bash
+3. **Start development server**
+   ```bash
    bun run dev
-    ```
+   ```
 
-## Development
+4. **Enable Remote Caching** (recommended)
+   ```bash
+   bunx turbo login
+   ```
+   Learn more about [Turborepo Remote Cache](https://turborepo.com/remote-cache)
 
-- Run type checking: `bun run check-types`
-- Format code: `bun run format`
+
+## 🛠️ Available Commands
+
+| Command | Description |
+|---------|-------------|
+| `bun run dev` | Start development servers for all apps |
+| `bun run build` | Build all apps and packages |
+| `bun run lint` | Lint all apps and packages |
+| `bun run check-types` | Run TypeScript type checking |
+| `bun run format` | Format code using Prettier |
+
+## 💡 Development Tips
+
+- **Turborepo Caching**: Run any command twice to benefit from Turborepo's intelligent caching system
+- **Parallel Development**: All apps and packages run concurrently during development
+- **Shared Dependencies**: Common packages are automatically linked across the monorepo
+
+## 🏗️ Built With
+
+- **[Turborepo](https://turborepo.org/)** - Build system and monorepo tools
+- **[Bun](https://bun.sh/)** - Fast JavaScript runtime and package manager
+- **TypeScript** - Type-safe JavaScript development
+
+**Happy coding!** 🎉
