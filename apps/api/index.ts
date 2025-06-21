@@ -1,11 +1,11 @@
 import express from "express";
-import { authMiddleWare } from "./middleware";
+import { clerkMiddleware } from "./middleware";
 import { prismaclient } from "db/client";
 
 const app = express();
 const PORT = 9008;
 
-app.post("/api/v1/website", authMiddleWare, async (req, res) => {
+app.post("/api/v1/website", clerkMiddleware, async (req, res) => {
   try {
     const userId = req.userId!;
     const { url } = req.body;
