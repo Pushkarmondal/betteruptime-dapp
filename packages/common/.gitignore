@@ -10,8 +10,6 @@ dist
 coverage
 *.lcov
 
-config.ts
-
 # logs
 logs
 _.log

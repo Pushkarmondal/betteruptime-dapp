@@ -1,6 +1,6 @@
 "use client"
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { Menu, X, Monitor } from 'lucide-react';
 import { ThemeToggle } from './theme-toggle';
@@ -8,6 +8,8 @@ import { ThemeToggle } from './theme-toggle';
 export function Appbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
+  const isDashboard = pathname?.startsWith('/dashboard') ?? false;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -23,15 +25,17 @@ export function Appbar() {
         
         {/* Right side - Navigation, Auth and Theme Toggle */}
         <div className="flex items-center space-x-4">
-          {/* Features link - now on the right side */}
-          <nav className="hidden md:flex items-center">
-            <a
-              href="#features"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-4 py-2"
-            >
-              Features
-            </a>
-          </nav>
+          {/* Features link - only shown when not on dashboard */}
+          {!isDashboard && (
+            <nav className="hidden md:flex items-center">
+              <a
+                href="#features"
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-4 py-2"
+              >
+                Features
+              </a>
+            </nav>
+          )}
           
           <div className="hidden md:flex items-center space-x-4">
             <SignedOut>
@@ -67,13 +71,15 @@ export function Appbar() {
       {isMenuOpen && (
         <div className="md:hidden border-t">
           <div className="px-2 pt-2 pb-3 space-y-1">
-            <a
-              href="#features"
-              className="block px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Features
-            </a>
+            {!isDashboard && (
+              <a
+                href="#features"
+                className="block px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Features
+              </a>
+            )}
             <SignedOut>
               <div className="pt-2 border-t mt-2 space-y-2">
                 <SignInButton mode="modal">

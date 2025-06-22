@@ -30,6 +30,7 @@ model Validator {
   publicKey   String
   location    String
   ip          String
+  pendingpayouts Int @default(0)
   websiteTick WebsiteTick[]
 }
 

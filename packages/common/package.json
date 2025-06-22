@@ -1,10 +1,9 @@
 {
-  "name": "validator",
+  "name": "common",
   "module": "index.ts",
   "type": "module",
   "private": true,
   "devDependencies": {
-    "@types/bs58": "^4.0.4",
     "@types/bun": "latest"
   },
   "peerDependencies": {
