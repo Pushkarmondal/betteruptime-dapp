@@ -39,6 +39,30 @@ interface NewWebsiteForm {
 }
 
 const Dashboard: React.FC = () => {
+  // Utility function to format website URLs consistently
+  const formatWebsiteUrl = (url: string) => {
+    try {
+      // Remove protocol and www.
+      let formatted = url.replace(/(https?:\/\/)?(www\.)?/i, '');
+      // Remove trailing slash
+      formatted = formatted.replace(/\/$/, '');
+      // Truncate if too long
+      if (formatted.length > 30) {
+        const parts = formatted.split('/');
+        const domain = parts[0];
+        
+        if (domain.length > 30) {
+          return `${domain.substring(0, 15)}...${domain.substring(domain.length - 12)}`;
+        }
+        
+        return `${formatted.substring(0, 30)}...`;
+      }
+      return formatted;
+    } catch (error) {
+      console.error('Error formatting URL:', error);
+      return url; // Return original if any error occurs
+    }
+  };
   const [expandedWebsite, setExpandedWebsite] = useState<string | null>(null);
   const [showAddModal, setShowAddModal] = useState(false);
   const [newWebsite, setNewWebsite] = useState<NewWebsiteForm>({ name: '', url: '' });
@@ -279,38 +303,48 @@ const Dashboard: React.FC = () => {
                     <div className={`w-4 h-4 rounded-full ${getStatusBgColor(website.status)}`}></div>
                     
                     {/* Website Info */}
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    <div className="min-w-0">
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white truncate">
                         {website.name}
                       </h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 flex items-center">
-                        <Globe className="h-4 w-4 mr-1" />
-                        {website.url}
-                      </p>
+                      <div className="flex items-center">
+                        <Globe className="h-4 w-4 mr-2 flex-shrink-0 text-gray-400" />
+                        <a 
+                          href={website.url.startsWith('http') ? website.url : `https://${website.url}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium truncate max-w-[180px] sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl"
+                          title={website.url}
+                        >
+                          {formatWebsiteUrl(website.url)}
+                        </a>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-6">
+                  <div className="flex items-center space-x-2 sm:space-x-4 md:space-x-6 flex-shrink-0">
                     {/* Status */}
-                    <div className="text-center">
-                      <div className={`flex items-center ${getStatusColor(website.status)}`}>
+                    <div className="text-center min-w-[100px]">
+                      <div className={`flex items-center justify-end sm:justify-center ${getStatusColor(website.status)}`}>
                         {getStatusIcon(website.status)}
-                        <span className="ml-1 font-medium capitalize">{website.status}</span>
+                        <span className="ml-1 font-medium capitalize hidden sm:inline">{website.status}</span>
                       </div>
                     </div>
 
                     {/* Response Time */}
-                    <div className="text-center">
-                      <p className="text-sm text-gray-600 dark:text-gray-400">Response Time</p>
-                      <p className="font-semibold text-gray-900 dark:text-white">
-                        {website.responseTime > 0 ? `${website.responseTime}ms` : 'N/A'}
+                    <div className="text-center min-w-[100px]">
+                      <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Response</p>
+                      <p className="text-sm font-semibold text-gray-900 dark:text-white">
+                        {website.responseTime}ms
                       </p>
                     </div>
 
                     {/* Uptime */}
-                    <div className="text-center">
-                      <p className="text-sm text-gray-600 dark:text-gray-400">Uptime</p>
-                      <p className="font-semibold text-gray-900 dark:text-white">{website.uptime}%</p>
+                    <div className="text-center min-w-[80px]">
+                      <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Uptime</p>
+                      <p className="text-sm font-semibold text-gray-900 dark:text-white">
+                        {website.uptime}%
+                      </p>
                     </div>
 
                     {/* Expand Icon */}
