@@ -1,11 +1,14 @@
 import express from "express";
-import { clerkMiddleware } from "./middleware";
+import { authMiddleWare } from "./middleware";
 import { prismaclient } from "db/client";
-
+import cors from "cors"
 const app = express();
 const PORT = 9008;
 
-app.post("/api/v1/website", clerkMiddleware, async (req, res) => {
+app.use(cors());
+app.use(express.json());
+
+app.post("/api/v1/website", authMiddleWare, async (req, res) => {
   try {
     const userId = req.userId!;
     const { url } = req.body;
@@ -66,6 +69,9 @@ app.get("/api/v1/websites", authMiddleWare, async(req, res) => {
             where: {
                 userId,
                 disabled: false
+            }, 
+            include: {
+                websiteTick: true
             }
         })
         res.status(200).json({
